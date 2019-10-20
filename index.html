@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="application/javascript" src="dist/main.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/App.css" />
+    <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+    <title>Pathfinder visualizer</title>
+</head>
+<body>
+    <div class="title-container">
+        <h1 class="title">GridAlgoPathfinder!!!</h1>
+        <!-- <i class="fas fa-running"></i> -->
+    </div>
+    <div id="main">
+        <table id="grid"></table>
+    </div>
+    <div class="menu-container">
+        <!-- <div class="menu"> -->
+            <div class="menu-radio">
+                <p class="text-t">Select Grid Size:</p>
+                <div class="radio text" id="selectGridS">
+                    <input type="radio" id="grids_1" name="size" value="small">Small
+                    <input type="radio" id="grids_2" name="size" value="medium" checked>Medium
+                    <input type="radio" id="grids_3" name="size" value="large">Large
+                </div>
+            </div>
+                <button class="start-btn" id="GGrid">Generate Grid</button>
+            <div class="spacer"></div>
+            <div class="menu-radio">
+                <p class="text-t">Select Grid Style:</p>
+                <div class="radio text">
+                    <input type="radio" id="gridg_1" name="grid" value="grid" checked>Random
+                    <input type="radio" id="gridg_2" name="grid" value="maze">Maze
+                </div>
+            </div>
+                <button class="start-btn" id="PGrid">Populate Grid</button>
+            <div class="spacer"></div>
+            <div class="menu-radio">
+                <p class="text-t">Select Algorithm:</p>
+                <div class="radio text">
+                    <input type="radio" id="BFS" name="algo" value="BFS" checked>BFS
+                    <input type="radio" id="DFS" name="algo" value="DFS">DFS
+                </div>
+            </div>
+                <button class="start-btn" id="StartButton">Start</button>
+            <div class="spacer"></div>
+                <button class="start-btn" id="CGrid">Clear Grid</button>
+        <!-- </div> -->
+    </div>
+</body>
+</html>

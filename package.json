@@ -1,0 +1,15 @@
+{
+  "name": "gridalgpathfinder",
+  "version": "1.0.0",
+  "description": "App that uses algorithems to find path in grid to target location",
+  "main": "index.js",
+  "scripts": {
+    "webpack": "webpack --watch --mode=development"
+  },
+  "author": "Anisur Khan",
+  "license": "ISC",
+  "dependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
+  }
+}

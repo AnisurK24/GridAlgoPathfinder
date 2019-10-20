@@ -1,0 +1,162 @@
+.title {
+    color: white;
+    font-size: 40px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-align: start;
+    padding: 3px 5px;
+    font-family: "Lato", Helvetica, Arial, sans-serif;
+}
+
+.title-container {
+    background-color: #34495e;
+}
+
+.walkable {
+  border: 1px solid rgb(175, 216, 248);
+}
+
+.grid-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#main {
+    /* width: 700px; */
+    /* border-radius: 10px; */
+    /* padding: 20px 70px; */
+    background-color: #FFFFFF;
+    /* box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
+    /* height: 100%; */
+    height: 88%;
+    /* position: absolute; */
+    width: 100vw;
+}
+
+#grid {
+    width: 100%;
+    height: 100%;
+}
+
+#grid td{
+  /*border: 1px solid rgb(175, 216, 248);*/
+  width: 25px;
+  height: 25px;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0px;
+    display: block;
+}
+
+.goal {
+    background-color: yellow;
+    border: 1px solid red;
+    background-image: url(flag.svg);
+    overflow: hidden;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.start {
+    background-color: greenyellow;
+    border: 1px solid violet;
+    background-image: url(running-man.svg);
+    overflow: hidden;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family: "Lato", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    position: absolute;
+    bottom: 0;
+    background-color: #34495e;
+    width: 100%;
+    align-items: center;
+}
+
+.text {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.text-t {
+    color: #1abc9c;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.spacer {
+    width: 2px;
+    /* height: auto; */
+    background-color: #9A9698; 
+    height: 50px;
+    margin: 0 5px;
+    opacity: 0.5;
+}
+
+.menu-radio {
+    margin: 3px 10px 20px 10px;
+    white-space: nowrap;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+/* .radio {
+    display: flex;
+    flex-direction: row;
+} */
+
+/* .menu {
+    display: flex;
+    flex-direction: row;
+    font-family: "Lato", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    position: absolute;
+    bottom: 0;
+    background-color: #34495e;
+    width: 95%;
+    align-items: center;
+} */
+
+.start-btn {
+    color: #ffffff;
+    background-color: #1abc9c;
+    border: none;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 1.4;
+    border-radius: 4px;
+    padding: 10px 15px;
+    transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
+    white-space: nowrap;
+}
+
+.start-btn:hover {
+    background-color: #48c9b0;
+    cursor: pointer;
+}
+
+.menu-radio input{
+    /* color: #1abc9c; */
+    cursor: pointer;
+}
+
+.block {
+  background-color: rgb(12, 53, 71);
+  border: 1px solid rgb(12, 53, 71);
+}
+
+
