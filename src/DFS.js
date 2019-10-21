@@ -1,6 +1,4 @@
-
-
-class BFS {
+class DFS {
   constructor(graph, start, end) {
     this.start = start;
     this.end = end;
@@ -9,7 +7,6 @@ class BFS {
     for (let x = 0; x < this.graph.length; x++) {
       for (let y = 0; y < this.graph[x].length; y++) {
         this.graph[x][y].parent = null;
-        this.graph[x][y].visited = false;
       }
     }
   }
@@ -20,40 +17,45 @@ class BFS {
     const end = this.end;
     const closedSet = [];
 
-    let queue = [start];
+    let stack = [[start, []]];
 
-    while (queue.length > 0) {
-      let currNode = queue.shift();
+    while (stack.length > 0) {
+      let currState = stack.pop();
+      let currNode = currState[0];
+      let currPath = currState[1];
 
       if (currNode.x === end.x && currNode.y === end.y) {
-        let path = [];
-        let curr = currNode;
-
-        while (curr.parent) {
-          path.push(curr);
-          curr = curr.parent;
-        }
-
-        return { path: path.reverse(), closedSet: closedSet };
+        return { path: currPath, closedSet: closedSet };
       }
 
-      currNode.closed = true;
-      closedSet.push(currNode);
+      if (currNode.closed) {
+        continue;
+      }
 
       let neighbors = graph.neighbors(currNode);
       for (let i = 0; i < neighbors.length; i++) {
         let n = neighbors[i];
 
-        if (n.closed || n.weight === 0) continue;
+        if (n.weight === 0) continue;
+
+        if (n.x === end.x && n.y === end.y) {
+          return {
+            path: currPath.concat([n]),
+            closedSet: closedSet.concat([currNode])
+          };
+        }
 
         if (!n.visited) {
           n.visited = true;
           n.parent = currNode;
-          queue.push(n);
+          stack.push([n, currPath.concat([n])]);
         }
       }
+
+      currNode.closed = true;
+      closedSet.push(currNode);
     }
   }
 }
 
-export default BFS;
+export default DFS;

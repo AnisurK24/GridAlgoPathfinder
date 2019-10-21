@@ -2,7 +2,7 @@ import Grid from "./grid";
 
 
 $(document).ready(() => {
-  const grid = new Grid($("#grid"));
+  new Grid($("#grid"));
 
   const $newGridBtn = document.getElementById("GGrid");
   $newGridBtn.addEventListener("click", () => new Grid($("#grid")));

@@ -5,8 +5,8 @@ class Node {
       this.previousNode = null;
       this.weight = 0;
       this.path = null;
-    // this.x = x;
-    // this.y = y;
+      // this.x = x;
+      // this.y = y;
     // this.pos = { x: this.x, y: this.y };
     // this.weight = weight;
 
