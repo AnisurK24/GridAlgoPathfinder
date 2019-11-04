@@ -4,8 +4,8 @@ import Node from "./node";
 // import SearchGraph from "./search_graph";
 // import SearchGraph from "./search_graph";
 // import AStar from "./astar";
-// import BFS from "./bfs";
-// import DFS from "./dfs";
+import BFS from "./BFS";
+import DFS from "./DFS";
 
 
 class Grid {
@@ -13,23 +13,18 @@ class Grid {
     this.$graph = $graph;
 
     this.grid = [];
-    // this.nodes = [];
     this.nodeObject = {};
     this.start = null;
     this.goal = null;
-    // this.algo = BFSDFS;
-    // this.height = 25;
-    // this.width = 62;
-    // this.gridSize = 75;
 
     this.width = this.checkWidth();
     this.height = this.checkHeight();
     this.gridSize = this.checkGridSize();
     this.gridStyle = this.checkGridGen();
     this.clearGrid = this.clearGridBtn();
-    // this.algo = this.checkAlgo();
+    this.algo = this.checkAlgo();
     // this.startSearch = this.startAlgo();
-    console.log(this.nodes);
+    // console.log(this.node);
     console.log(this.nodeObject);
     console.log(this.grid);
 
@@ -195,48 +190,30 @@ class Grid {
     // }
   }
 
-  // checkAlgo() {
-  //   document.getElementById("StartButton").onclick = () => {
-  //     if (document.getElementById("BFS").checked) {
-  //       return BFS;
-  //     } else {
-  //       return DFS;
-  //     }
-  //   };
-  // }
-  // startAlgo() {
-  //   document.getElementById("StartButton").onclick = () => {
-  //     this.clickCell();
-  //   };
-  // }
+  checkAlgo() {
+    // document.getElementById("StartButton").onclick = () => {
+      if (document.getElementById("BFS").checked) {
+        return BFS;
+      } else {
+        return DFS;
+      }
+    // };
+  }
 
-  // clickCell($el) {
-  //   // this.$end = $el;
-  //   const goal = this.goal;
+  startAlgo() {
+    document.getElementById("StartButton").onclick = () => {
+      this.algo = this.checkAlgo();
+      let algoObj = new this.algo(this.nodeObject, this.grid, this.height, this.width);
+    };
+  }
 
-  //   // if ($el.hasClass("start")) return;
+  runAlgo() {
 
-  //   this.searchGraph = new SearchGraph(this.nodes);
+  }
 
-  //   // this.$cells.removeClass("end");
-  //   // $el.addClass("end");
-
-  //   this.$start = this.$cells.filter(".start");
-  //   let startNode = this.start;
-  //   let endNode = this.goal;
-
-  //   let algoObj = new this.algo(
-  //     this.searchGraph,
-  //     startNode,
-  //     endNode,
-  //     this.grid
-  //   );
-
-  //   let { path, closedSet } = algoObj.search();
-  //   this.path = path;
-
-  //   // this.highlightClosed(closedSet, 1);
-  // }
+  neighbors(node) {
+    let allNeighbors = [];
+  }
 
   // searchBtn() {
   //   document.getElementById("StartButton").onclick = () => {

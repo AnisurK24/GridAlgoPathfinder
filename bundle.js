@@ -86,6 +86,206 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/BFS.js":
+/*!********************!*\
+  !*** ./src/BFS.js ***!
+  \********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class BFS {
+  constructor(nodes, start, goal, grid) {
+    this.nodes = nodes;
+    this.grid = grid;
+    this.height = height;
+    this.width = width;
+    this.start = start;
+    this.goal = goal;
+
+    // for (let row = 0; row < this.height; row++) {
+    //   for (let col = 0; col < this.width; col++) {
+    //     if (this.grid[row][col].class === start) {
+    //       this.start = this.grid[row][col];
+    //     } else if (this.grid[row][col].class === goal) {
+    //       this.goal = this.grid[row][col];
+    //     }
+    //   }
+    // }
+  }
+
+  search() {
+    let nodes = this.nodes;
+    let start = this.start;
+    let goal = this.goal;
+    let grid = this.grid;
+    let closedSet = [];
+    
+
+    let queue = [start];
+
+    while (queue.length > 0) {
+      let node = queue.shift();
+
+      if (node.id === goal.id) {
+        let path = [];
+        let currNode = node;
+
+        while (currNode.parent) {
+          path.push(currNode);
+          currNode = currNode.parent;
+        }
+
+        return { path: path.reverse(), closedSet: closedSet };
+      }
+
+      const coordinates = currNode.id.split("-");
+      const row = parseInt(coordinates[0]);
+      const col = parseInt(coordinates[1]);
+
+      let nodeHTML = document.getElementById(currNode);
+      nodeHTML.className = "visited";
+      currNode.visited = true;
+      closedSet.push(currNode);
+
+      // let neighborNodes = [];
+
+      // if (grid[row - 1] && grid[row - 1][col]) {
+      //   neighborNode = `${(row - 1).toString()}-${col.toString()}`;
+      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+      //         if (document.getElementById("BFS").checked) {
+      //         neighborNodes.push(neighborNode);
+      //         } else {
+      //         neighborNodes.unshift(neighborNode);
+      //         }
+      //     }
+      // }
+      // if (grid[col + 1] && grid[row][col + 1]) {
+      //   neighborNode = `${row.toString()}-${(col + 1).toString()}`;
+      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+      //         if (document.getElementById("BFS").checked) {
+      //         neighborNodes.push(neighborNode);
+      //         } else {
+      //         neighborNodes.unshift(neighborNode);
+      //         }
+      //     }
+      // }
+      // if (grid[row + 1] && grid[row + 1][col]) {
+      //   neighborNode = `${(row + 1).toString()}-${col.toString()}`;
+      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+      //         if (document.getElementById("BFS").checked) {
+      //         neighborNodes.push(neighborNode);
+      //         } else {
+      //         neighborNodes.unshift(neighborNode);
+      //         }
+      //     }
+      // }
+      // if (grid[col - 1] && grid[row][col - 1]) {
+      //   neighborNode = `${row.toString()}-${(col - 1).toString()}`;
+      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+      //         if (document.getElementById("BFS").checked) {
+      //         neighborNodes.push(neighborNode);
+      //         } else {
+      //         neighborNodes.unshift(neighborNode);
+      //         }
+      //     }
+      // }
+
+
+      for (let i = 0; i < neighbors.length; i++) {
+        let n = neighbors[i];
+
+        if (n.closed || n.weight === 0) continue;
+
+        if (!n.visited) {
+          n.visited = true;
+          n.parent = currNode;
+          queue.push(n);
+        }
+      }
+    }
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (BFS);
+
+/***/ }),
+
+/***/ "./src/DFS.js":
+/*!********************!*\
+  !*** ./src/DFS.js ***!
+  \********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class DFS {
+  constructor(graph, start, end) {
+    this.start = start;
+    this.end = end;
+    this.graph = graph;
+
+    for (let x = 0; x < this.graph.length; x++) {
+      for (let y = 0; y < this.graph[x].length; y++) {
+        this.graph[x][y].parent = null;
+      }
+    }
+  }
+
+  search() {
+    const graph = this.graph;
+    const start = this.start;
+    const end = this.end;
+    const closedSet = [];
+
+    let stack = [[start, []]];
+
+    while (stack.length > 0) {
+      let currState = stack.pop();
+      let currNode = currState[0];
+      let currPath = currState[1];
+
+      if (currNode.x === end.x && currNode.y === end.y) {
+        return { path: currPath, closedSet: closedSet };
+      }
+
+      if (currNode.closed) {
+        continue;
+      }
+
+      let neighbors = graph.neighbors(currNode);
+      for (let i = 0; i < neighbors.length; i++) {
+        let n = neighbors[i];
+
+        if (n.weight === 0) continue;
+
+        if (n.x === end.x && n.y === end.y) {
+          return {
+            path: currPath.concat([n]),
+            closedSet: closedSet.concat([currNode])
+          };
+        }
+
+        if (!n.visited) {
+          n.visited = true;
+          n.parent = currNode;
+          stack.push([n, currPath.concat([n])]);
+        }
+      }
+
+      currNode.closed = true;
+      closedSet.push(currNode);
+    }
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (DFS);
+
+
+/***/ }),
+
 /***/ "./src/grid.js":
 /*!*********************!*\
   !*** ./src/grid.js ***!
@@ -96,14 +296,16 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node */ "./src/node.js");
+/* harmony import */ var _BFS__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BFS */ "./src/BFS.js");
+/* harmony import */ var _DFS__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DFS */ "./src/DFS.js");
 // import BuildTree from "./search.js";
 
 // import BFSDFS from "./BFSDFS";
 // import SearchGraph from "./search_graph";
 // import SearchGraph from "./search_graph";
 // import AStar from "./astar";
-// import BFS from "./bfs";
-// import DFS from "./dfs";
+
+
 
 
 class Grid {
@@ -111,23 +313,18 @@ class Grid {
     this.$graph = $graph;
 
     this.grid = [];
-    // this.nodes = [];
     this.nodeObject = {};
     this.start = null;
     this.goal = null;
-    // this.algo = BFSDFS;
-    // this.height = 25;
-    // this.width = 62;
-    // this.gridSize = 75;
 
     this.width = this.checkWidth();
     this.height = this.checkHeight();
     this.gridSize = this.checkGridSize();
     this.gridStyle = this.checkGridGen();
     this.clearGrid = this.clearGridBtn();
-    // this.algo = this.checkAlgo();
+    this.algo = this.checkAlgo();
     // this.startSearch = this.startAlgo();
-    console.log(this.nodes);
+    // console.log(this.node);
     console.log(this.nodeObject);
     console.log(this.grid);
 
@@ -293,48 +490,30 @@ class Grid {
     // }
   }
 
-  // checkAlgo() {
-  //   document.getElementById("StartButton").onclick = () => {
-  //     if (document.getElementById("BFS").checked) {
-  //       return BFS;
-  //     } else {
-  //       return DFS;
-  //     }
-  //   };
-  // }
-  // startAlgo() {
-  //   document.getElementById("StartButton").onclick = () => {
-  //     this.clickCell();
-  //   };
-  // }
+  checkAlgo() {
+    // document.getElementById("StartButton").onclick = () => {
+      if (document.getElementById("BFS").checked) {
+        return _BFS__WEBPACK_IMPORTED_MODULE_1__["default"];
+      } else {
+        return _DFS__WEBPACK_IMPORTED_MODULE_2__["default"];
+      }
+    // };
+  }
 
-  // clickCell($el) {
-  //   // this.$end = $el;
-  //   const goal = this.goal;
+  startAlgo() {
+    document.getElementById("StartButton").onclick = () => {
+      this.algo = this.checkAlgo();
+      let algoObj = new this.algo(this.nodeObject, this.grid, this.height, this.width);
+    };
+  }
 
-  //   // if ($el.hasClass("start")) return;
+  runAlgo() {
 
-  //   this.searchGraph = new SearchGraph(this.nodes);
+  }
 
-  //   // this.$cells.removeClass("end");
-  //   // $el.addClass("end");
-
-  //   this.$start = this.$cells.filter(".start");
-  //   let startNode = this.start;
-  //   let endNode = this.goal;
-
-  //   let algoObj = new this.algo(
-  //     this.searchGraph,
-  //     startNode,
-  //     endNode,
-  //     this.grid
-  //   );
-
-  //   let { path, closedSet } = algoObj.search();
-  //   this.path = path;
-
-  //   // this.highlightClosed(closedSet, 1);
-  // }
+  neighbors(node) {
+    let allNeighbors = [];
+  }
 
   // searchBtn() {
   //   document.getElementById("StartButton").onclick = () => {
@@ -401,9 +580,9 @@ class Node {
   constructor(id, status) {
       this.id = id;
       this.status = status;
-      this.previousNode = null;
+      // this.previousNode = null;
       this.weight = 0;
-      this.path = null;
+      // this.path = null;
       // this.x = x;
       // this.y = y;
     // this.pos = { x: this.x, y: this.y };
@@ -413,9 +592,9 @@ class Node {
     // this.g = 0;
     // this.h = 0;
 
-    // this.visited = false;
+    this.visited = false;
     // this.closed = false;
-    // this.parent = null;
+    this.parent = null;
   }
 }
 

@@ -9,6 +9,6 @@ module.exports = {
   },
   devtool: "source-map",
   resolve: {
-    extensions: [".js", "*", ""]
+    extensions: [".js", "*"]
   }
 };

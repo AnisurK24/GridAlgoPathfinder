@@ -1,46 +1,101 @@
-
-
 class BFS {
-  constructor(graph, start, end) {
+  constructor(nodes, start, goal, grid) {
+    this.nodes = nodes;
+    this.grid = grid;
+    this.height = height;
+    this.width = width;
     this.start = start;
-    this.end = end;
-    this.graph = graph;
+    this.goal = goal;
 
-    for (let x = 0; x < this.graph.length; x++) {
-      for (let y = 0; y < this.graph[x].length; y++) {
-        this.graph[x][y].parent = null;
-        this.graph[x][y].visited = false;
-      }
-    }
+    // for (let row = 0; row < this.height; row++) {
+    //   for (let col = 0; col < this.width; col++) {
+    //     if (this.grid[row][col].class === start) {
+    //       this.start = this.grid[row][col];
+    //     } else if (this.grid[row][col].class === goal) {
+    //       this.goal = this.grid[row][col];
+    //     }
+    //   }
+    // }
   }
 
   search() {
-    const graph = this.graph;
-    const start = this.start;
-    const end = this.end;
-    const closedSet = [];
+    let nodes = this.nodes;
+    let start = this.start;
+    let goal = this.goal;
+    let grid = this.grid;
+    let closedSet = [];
+    
 
     let queue = [start];
 
     while (queue.length > 0) {
-      let currNode = queue.shift();
+      let node = queue.shift();
 
-      if (currNode.x === end.x && currNode.y === end.y) {
+      if (node.id === goal.id) {
         let path = [];
-        let curr = currNode;
+        let currNode = node;
 
-        while (curr.parent) {
-          path.push(curr);
-          curr = curr.parent;
+        while (currNode.parent) {
+          path.push(currNode);
+          currNode = currNode.parent;
         }
 
         return { path: path.reverse(), closedSet: closedSet };
       }
 
-      currNode.closed = true;
+      const coordinates = currNode.id.split("-");
+      const row = parseInt(coordinates[0]);
+      const col = parseInt(coordinates[1]);
+
+      let nodeHTML = document.getElementById(currNode);
+      nodeHTML.className = "visited";
+      currNode.visited = true;
       closedSet.push(currNode);
 
-      let neighbors = graph.neighbors(currNode);
+      // let neighborNodes = [];
+
+      // if (grid[row - 1] && grid[row - 1][col]) {
+      //   neighborNode = `${(row - 1).toString()}-${col.toString()}`;
+      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+      //         if (document.getElementById("BFS").checked) {
+      //         neighborNodes.push(neighborNode);
+      //         } else {
+      //         neighborNodes.unshift(neighborNode);
+      //         }
+      //     }
+      // }
+      // if (grid[col + 1] && grid[row][col + 1]) {
+      //   neighborNode = `${row.toString()}-${(col + 1).toString()}`;
+      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+      //         if (document.getElementById("BFS").checked) {
+      //         neighborNodes.push(neighborNode);
+      //         } else {
+      //         neighborNodes.unshift(neighborNode);
+      //         }
+      //     }
+      // }
+      // if (grid[row + 1] && grid[row + 1][col]) {
+      //   neighborNode = `${(row + 1).toString()}-${col.toString()}`;
+      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+      //         if (document.getElementById("BFS").checked) {
+      //         neighborNodes.push(neighborNode);
+      //         } else {
+      //         neighborNodes.unshift(neighborNode);
+      //         }
+      //     }
+      // }
+      // if (grid[col - 1] && grid[row][col - 1]) {
+      //   neighborNode = `${row.toString()}-${(col - 1).toString()}`;
+      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+      //         if (document.getElementById("BFS").checked) {
+      //         neighborNodes.push(neighborNode);
+      //         } else {
+      //         neighborNodes.unshift(neighborNode);
+      //         }
+      //     }
+      // }
+
+
       for (let i = 0; i < neighbors.length; i++) {
         let n = neighbors[i];
 

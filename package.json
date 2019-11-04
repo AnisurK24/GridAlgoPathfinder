@@ -3,16 +3,8 @@
   "version": "1.0.0",
   "description": "App that uses algorithms to find path in grid to target location",
   "main": "bundle.js",
-  "engines": {
-    "node": "6.2.1",
-    "npm": "3.9.3"
-  },
   "scripts": {
     "webpack": "webpack --watch --mode=development"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AnisurK24/GridAlgoPathfinder.git"
   },
   "author": "Anisur Khan",
   "license": "ISC",
