@@ -6,9 +6,9 @@ GridAlgoPathfinder is a pathfinding visualizer created with JavaScript, jQuery, 
 
 ## Technologies Used:
 
-* [JavaScript]
+* JavaScript
 * [jQuery](https://api.jquery.com/)
-* [HTML/CSS]
+* HTML/CSS
 
 ## Features:
 
@@ -64,4 +64,4 @@ The user has the ability to generate grids in 3 sizes. Currently, they have the 
   }
 ```
 
-Grid and nodes were created using HTML (<tr>) table row and (<td>) table cell tags.
+Grid and nodes were created using HTML (tr) table row and (td) table cell tags.
