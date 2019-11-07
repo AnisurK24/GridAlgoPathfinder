@@ -99,11 +99,11 @@ class BFS {
   constructor(nodes, start, goal, grid) {
     this.nodes = nodes;
     this.grid = grid;
-    this.height = height;
-    this.width = width;
+    // this.height = height;
+    // this.width = width;
     this.start = start;
     this.goal = goal;
-
+    // console.log(this.grid);
     // for (let row = 0; row < this.height; row++) {
     //   for (let col = 0; col < this.width; col++) {
     //     if (this.grid[row][col].class === start) {
@@ -124,86 +124,81 @@ class BFS {
     
 
     let queue = [start];
-
+    start.visited = true;
     while (queue.length > 0) {
-      let node = queue.shift();
+        let node = queue.shift();
 
       if (node.id === goal.id) {
         let path = [];
-        let currNode = node;
+        let currentNode = node;
 
-        while (currNode.parent) {
-          path.push(currNode);
-          currNode = currNode.parent;
+        
+        while (currentNode.parent) {
+          path.push(currentNode);
+          currentNode = currentNode.parent;
         }
-
-        return { path: path.reverse(), closedSet: closedSet };
+        
+        // console.log(grid);
+        return { path: path.reverse(), visitedNodes: closedSet };
       }
+      // console.log(goal.id);
+      // console.log(node.id);
 
-      const coordinates = currNode.id.split("-");
+      const coordinates = node.id.split("-");
       const row = parseInt(coordinates[0]);
       const col = parseInt(coordinates[1]);
 
-      let nodeHTML = document.getElementById(currNode);
-      nodeHTML.className = "visited";
-      currNode.visited = true;
-      closedSet.push(currNode);
+      // let nodeHTML = document.getElementById(node.id);
+      // console.log(nodeHTML);
+      if (node.id !== start.id) {
+        // nodeHTML.className = "visited";
+        node.visited = true;
+        closedSet.push(node);
+      }
 
       // let neighborNodes = [];
-
-      // if (grid[row - 1] && grid[row - 1][col]) {
-      //   neighborNode = `${(row - 1).toString()}-${col.toString()}`;
-      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
-      //         if (document.getElementById("BFS").checked) {
-      //         neighborNodes.push(neighborNode);
-      //         } else {
-      //         neighborNodes.unshift(neighborNode);
-      //         }
-      //     }
-      // }
-      // if (grid[col + 1] && grid[row][col + 1]) {
-      //   neighborNode = `${row.toString()}-${(col + 1).toString()}`;
-      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
-      //         if (document.getElementById("BFS").checked) {
-      //         neighborNodes.push(neighborNode);
-      //         } else {
-      //         neighborNodes.unshift(neighborNode);
-      //         }
-      //     }
-      // }
-      // if (grid[row + 1] && grid[row + 1][col]) {
-      //   neighborNode = `${(row + 1).toString()}-${col.toString()}`;
-      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
-      //         if (document.getElementById("BFS").checked) {
-      //         neighborNodes.push(neighborNode);
-      //         } else {
-      //         neighborNodes.unshift(neighborNode);
-      //         }
-      //     }
-      // }
-      // if (grid[col - 1] && grid[row][col - 1]) {
-      //   neighborNode = `${row.toString()}-${(col - 1).toString()}`;
-      //     if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
-      //         if (document.getElementById("BFS").checked) {
-      //         neighborNodes.push(neighborNode);
-      //         } else {
-      //         neighborNodes.unshift(neighborNode);
-      //         }
-      //     }
-      // }
-
-
-      for (let i = 0; i < neighbors.length; i++) {
-        let n = neighbors[i];
-
-        if (n.closed || n.weight === 0) continue;
-
-        if (!n.visited) {
-          n.visited = true;
-          n.parent = currNode;
-          queue.push(n);
-        }
+      let neighborNode;
+      if (grid[row - 1] && grid[row - 1][col]) {
+        neighborNode = `${(row - 1).toString()}-${col.toString()}`;
+          if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+                queue.push(nodes[neighborNode]);
+                nodes[neighborNode].parent = node;
+          }
       }
+      if (grid[col + 1] && grid[row][col + 1]) {
+        neighborNode = `${row.toString()}-${(col + 1).toString()}`;
+          if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+                queue.push(nodes[neighborNode]);
+                nodes[neighborNode].parent = node;
+          }
+      }
+      if (grid[row + 1] && grid[row + 1][col]) {
+        neighborNode = `${(row + 1).toString()}-${col.toString()}`;
+          if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+                queue.push(nodes[neighborNode]);
+                nodes[neighborNode].parent = node;
+          }
+      }
+      if (grid[col - 1] && grid[row][col - 1]) {
+        neighborNode = `${row.toString()}-${(col - 1).toString()}`;
+          if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
+                queue.push(nodes[neighborNode]);
+                nodes[neighborNode].parent = node;
+          }
+      }
+
+
+      // for (let i = 0; i < neighborNodes.length; i++) {
+        // let neighbor = neighborNodes[i];
+
+        // if (n.closed || n.weight === 0) continue;
+
+        // if (!neighbor.visited) {
+          // n.visited = true;
+          // neighbor.parent = currNode;
+          // queue.push(neighbor);
+        // }
+      // }
     }
   }
 }
@@ -323,8 +318,8 @@ class Grid {
     this.gridStyle = this.checkGridGen();
     this.clearGrid = this.clearGridBtn();
     this.algo = this.checkAlgo();
-    // this.startSearch = this.startAlgo();
-    // console.log(this.node);
+    this.startSearch = this.startAlgo();
+    console.log(this.$graph);
     console.log(this.nodeObject);
     console.log(this.grid);
 
@@ -368,12 +363,12 @@ class Grid {
         if (row === 1 && col === 1) {
           newNodeClass = "start";
           $cell.addClass("start");
-          this.start = `${newNodeId}`;
+          this.start = new _node__WEBPACK_IMPORTED_MODULE_0__["default"](newNodeId, newNodeClass);
           // $cell.addClass("fas fa-dog");
-        } else if (row === height - 2 && col === width - 2) {
+        } else if (row === 8 && col === 8) {
           newNodeClass = "goal";
           $cell.addClass("goal");
-          this.goal = `${newNodeId}`;
+          this.goal = new _node__WEBPACK_IMPORTED_MODULE_0__["default"](newNodeId, newNodeClass);
           // $cell.addClass("fas fa-user");
         } else {
           $cell.addClass("walkable");
@@ -426,6 +421,7 @@ class Grid {
   clearGridBtn() {
     document.getElementById("CGrid").onclick = () => {
       this.clearWalls();
+      // console.log("text");
     };
   }
 
@@ -466,11 +462,12 @@ class Grid {
   }
 
   mazeGridGen() {
-    let nodesToSkip = [this.grid.start, this.grid.goal];
     // let outline = false;
     // if (!outline) {
-    Object.keys(this.nodeObject).forEach(node => {
-      if (!nodesToSkip.includes(node)) {
+      Object.keys(this.nodeObject).forEach(node => {
+        let nodesToSkip = ["start", "goal"];
+        let nodeHTML = document.getElementById(node);
+      if (!nodesToSkip.includes(nodeHTML.className)) {
         let row = parseInt(node.split("-")[0]);
         let col = parseInt(node.split("-")[1]);
         let nodeHTML = document.getElementById(node);
@@ -494,45 +491,38 @@ class Grid {
     // document.getElementById("StartButton").onclick = () => {
       if (document.getElementById("BFS").checked) {
         return _BFS__WEBPACK_IMPORTED_MODULE_1__["default"];
-      } else {
-        return _DFS__WEBPACK_IMPORTED_MODULE_2__["default"];
+      } else if (document.getElementById("DFS").checked) {
+        return _BFS__WEBPACK_IMPORTED_MODULE_1__["default"];
       }
     // };
   }
 
   startAlgo() {
     document.getElementById("StartButton").onclick = () => {
+      // console.log("startAlgobutton");
+      // this.$start = this.$cells.filter(".start");
       this.algo = this.checkAlgo();
-      let algoObj = new this.algo(this.nodeObject, this.grid, this.height, this.width);
+      let algoObj = new this.algo(this.nodeObject, this.start, this.goal, this.grid);
+      let {path, visitedNodes} = algoObj.search();
+      this.path = path;
+      this.highlightVisited(visitedNodes, 0);
     };
   }
 
-  runAlgo() {
-
+  highlightVisited(visitedNodes, i) {
+    // console.log(visitedNodes[i].id);
+    setInterval(() => {
+      let j = i;
+      while (j < visitedNodes.length - 1) {
+        let nodeHTML = document.getElementById(visitedNodes[j].id);
+        nodeHTML.className = "visited";
+      j++;
+      // if (i < visitedNodes.length - 1) {
+        // this.highlightVisited(visitedNodes, i+1);
+      }
+      }, 1000);
   }
 
-  neighbors(node) {
-    let allNeighbors = [];
-  }
-
-  // searchBtn() {
-  //   document.getElementById("StartButton").onclick = () => {
-  //     this.beginSearch();
-  //   };
-  // }
-
-  // beginSearch() {
-
-  //     // let nodes = Object.keys(this.nodeObject);
-  //     // let searchObj = new BFSDFS(this.nodeObject, this.start, this.goal, this.grid);
-  //     this.searchGraph = new SearchGraph(this.nodeObject, this.grid);
-  //     let searchObj = new this.algo(this.searchGraph, this.nodeObject, this.start, this.goal, this.grid);
-  //     console.log(searchObj);
-  //     console.log(this.grid);
-  //     // console.log(BFSDFS);
-  //     console.log(this.nodeObject);
-
-  // }
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Grid);
@@ -556,14 +546,14 @@ __webpack_require__.r(__webpack_exports__);
 
 $(document).ready(() => {
   new _grid__WEBPACK_IMPORTED_MODULE_0__["default"]($("#grid"));
-
+  // console.log(Grid);
   const $newGridBtn = document.getElementById("GGrid");
   $newGridBtn.addEventListener("click", () => new _grid__WEBPACK_IMPORTED_MODULE_0__["default"]($("#grid")));
 
 });
 
 
-console.log("Webpack is working!");
+// console.log("Webpack is working!");
 
 /***/ }),
 

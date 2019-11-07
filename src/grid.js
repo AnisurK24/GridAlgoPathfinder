@@ -23,8 +23,8 @@ class Grid {
     this.gridStyle = this.checkGridGen();
     this.clearGrid = this.clearGridBtn();
     this.algo = this.checkAlgo();
-    // this.startSearch = this.startAlgo();
-    // console.log(this.node);
+    this.startSearch = this.startAlgo();
+    console.log(this.$graph);
     console.log(this.nodeObject);
     console.log(this.grid);
 
@@ -68,12 +68,12 @@ class Grid {
         if (row === 1 && col === 1) {
           newNodeClass = "start";
           $cell.addClass("start");
-          this.start = `${newNodeId}`;
+          this.start = new Node(newNodeId, newNodeClass);
           // $cell.addClass("fas fa-dog");
-        } else if (row === height - 2 && col === width - 2) {
+        } else if (row === 8 && col === 8) {
           newNodeClass = "goal";
           $cell.addClass("goal");
-          this.goal = `${newNodeId}`;
+          this.goal = new Node(newNodeId, newNodeClass);
           // $cell.addClass("fas fa-user");
         } else {
           $cell.addClass("walkable");
@@ -126,6 +126,7 @@ class Grid {
   clearGridBtn() {
     document.getElementById("CGrid").onclick = () => {
       this.clearWalls();
+      // console.log("text");
     };
   }
 
@@ -166,11 +167,12 @@ class Grid {
   }
 
   mazeGridGen() {
-    let nodesToSkip = [this.grid.start, this.grid.goal];
     // let outline = false;
     // if (!outline) {
-    Object.keys(this.nodeObject).forEach(node => {
-      if (!nodesToSkip.includes(node)) {
+      Object.keys(this.nodeObject).forEach(node => {
+        let nodesToSkip = ["start", "goal"];
+        let nodeHTML = document.getElementById(node);
+      if (!nodesToSkip.includes(nodeHTML.className)) {
         let row = parseInt(node.split("-")[0]);
         let col = parseInt(node.split("-")[1]);
         let nodeHTML = document.getElementById(node);
@@ -194,45 +196,38 @@ class Grid {
     // document.getElementById("StartButton").onclick = () => {
       if (document.getElementById("BFS").checked) {
         return BFS;
-      } else {
-        return DFS;
+      } else if (document.getElementById("DFS").checked) {
+        return BFS;
       }
     // };
   }
 
   startAlgo() {
     document.getElementById("StartButton").onclick = () => {
+      // console.log("startAlgobutton");
+      // this.$start = this.$cells.filter(".start");
       this.algo = this.checkAlgo();
-      let algoObj = new this.algo(this.nodeObject, this.grid, this.height, this.width);
+      let algoObj = new this.algo(this.nodeObject, this.start, this.goal, this.grid);
+      let {path, visitedNodes} = algoObj.search();
+      this.path = path;
+      this.highlightVisited(visitedNodes, 0);
     };
   }
 
-  runAlgo() {
-
+  highlightVisited(visitedNodes, i) {
+    // console.log(visitedNodes[i].id);
+    setInterval(() => {
+      let j = i;
+      while (j < visitedNodes.length - 1) {
+        let nodeHTML = document.getElementById(visitedNodes[j].id);
+        nodeHTML.className = "visited";
+      j++;
+      // if (i < visitedNodes.length - 1) {
+        // this.highlightVisited(visitedNodes, i+1);
+      }
+      }, 1000);
   }
 
-  neighbors(node) {
-    let allNeighbors = [];
-  }
-
-  // searchBtn() {
-  //   document.getElementById("StartButton").onclick = () => {
-  //     this.beginSearch();
-  //   };
-  // }
-
-  // beginSearch() {
-
-  //     // let nodes = Object.keys(this.nodeObject);
-  //     // let searchObj = new BFSDFS(this.nodeObject, this.start, this.goal, this.grid);
-  //     this.searchGraph = new SearchGraph(this.nodeObject, this.grid);
-  //     let searchObj = new this.algo(this.searchGraph, this.nodeObject, this.start, this.goal, this.grid);
-  //     console.log(searchObj);
-  //     console.log(this.grid);
-  //     // console.log(BFSDFS);
-  //     console.log(this.nodeObject);
-
-  // }
 }
 
 export default Grid;
