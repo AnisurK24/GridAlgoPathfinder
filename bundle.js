@@ -99,20 +99,15 @@ class BFS {
   constructor(nodes, start, goal, grid) {
     this.nodes = nodes;
     this.grid = grid;
-    // this.height = height;
-    // this.width = width;
     this.start = start;
     this.goal = goal;
-    // console.log(this.grid);
-    // for (let row = 0; row < this.height; row++) {
-    //   for (let col = 0; col < this.width; col++) {
-    //     if (this.grid[row][col].class === start) {
-    //       this.start = this.grid[row][col];
-    //     } else if (this.grid[row][col].class === goal) {
-    //       this.goal = this.grid[row][col];
-    //     }
-    //   }
-    // }
+    console.log(grid);
+    console.log(nodes);
+    Object.keys(this.nodes).forEach(node => {
+      let currentNode = this.nodes[node];
+      currentNode.visited = false;
+      currentNode.parent = null;
+    });
   }
 
   search() {
@@ -125,6 +120,7 @@ class BFS {
 
     let queue = [start];
     start.visited = true;
+
     while (queue.length > 0) {
         let node = queue.shift();
 
@@ -134,15 +130,14 @@ class BFS {
 
         
         while (currentNode.parent) {
-          path.push(currentNode);
+          path.push(currentNode.id);
           currentNode = currentNode.parent;
         }
         
-        // console.log(grid);
+        // console.log(path);
         return { path: path.reverse(), visitedNodes: closedSet };
       }
-      // console.log(goal.id);
-      // console.log(node.id);
+      
 
       const coordinates = node.id.split("-");
       const row = parseInt(coordinates[0]);
@@ -152,8 +147,8 @@ class BFS {
       // console.log(nodeHTML);
       if (node.id !== start.id) {
         // nodeHTML.className = "visited";
-        node.visited = true;
-        closedSet.push(node);
+        // node.visited = true;
+        closedSet.push(node.id);
       }
 
       // let neighborNodes = [];
@@ -163,6 +158,7 @@ class BFS {
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
                 nodes[neighborNode].parent = node;
+                nodes[neighborNode].visited = true;
           }
       }
       if (grid[col + 1] && grid[row][col + 1]) {
@@ -170,6 +166,7 @@ class BFS {
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
                 nodes[neighborNode].parent = node;
+                nodes[neighborNode].visited = true;
           }
       }
       if (grid[row + 1] && grid[row + 1][col]) {
@@ -177,6 +174,7 @@ class BFS {
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
                 nodes[neighborNode].parent = node;
+                nodes[neighborNode].visited = true;
           }
       }
       if (grid[col - 1] && grid[row][col - 1]) {
@@ -184,21 +182,9 @@ class BFS {
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
                 nodes[neighborNode].parent = node;
+                nodes[neighborNode].visited = true;
           }
       }
-
-
-      // for (let i = 0; i < neighborNodes.length; i++) {
-        // let neighbor = neighborNodes[i];
-
-        // if (n.closed || n.weight === 0) continue;
-
-        // if (!neighbor.visited) {
-          // n.visited = true;
-          // neighbor.parent = currNode;
-          // queue.push(neighbor);
-        // }
-      // }
     }
   }
 }
@@ -221,12 +207,6 @@ class DFS {
     this.start = start;
     this.end = end;
     this.graph = graph;
-
-    for (let x = 0; x < this.graph.length; x++) {
-      for (let y = 0; y < this.graph[x].length; y++) {
-        this.graph[x][y].parent = null;
-      }
-    }
   }
 
   search() {
@@ -293,12 +273,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node */ "./src/node.js");
 /* harmony import */ var _BFS__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BFS */ "./src/BFS.js");
 /* harmony import */ var _DFS__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DFS */ "./src/DFS.js");
-// import BuildTree from "./search.js";
 
-// import BFSDFS from "./BFSDFS";
-// import SearchGraph from "./search_graph";
-// import SearchGraph from "./search_graph";
-// import AStar from "./astar";
 
 
 
@@ -319,18 +294,12 @@ class Grid {
     this.clearGrid = this.clearGridBtn();
     this.algo = this.checkAlgo();
     this.startSearch = this.startAlgo();
-    console.log(this.$graph);
-    console.log(this.nodeObject);
-    console.log(this.grid);
+    // console.log(this.$graph);
+    // console.log(this.nodeObject);
+    // console.log(this.grid);
 
     $graph.empty();
     this.newGrid($graph);
-
-    // this.newGrid = this.newGrid.bind(this);
-
-    // this.searchGraph = new SearchGraph(this.nodes);
-    // this.$cells = $graph.find(".walkable");
-    // this.$cells.bind("click", e => this.clickCell($(e.target)));
   }
 
   newGrid($graph) {
@@ -345,8 +314,6 @@ class Grid {
 
     for (let row = 0; row < height; row++) {
       let $rowHTML = $("<tr />").addClass("grid-row");
-      // const currentNodeRow = [];
-      // const currentNodeORow = [];
       const currentGridRow = [];
 
       for (let col = 0; col < width; col++) {
@@ -355,35 +322,28 @@ class Grid {
         let newNode;
 
         let $cell = $cellHTML.clone();
-        $cell
-          .attr("id", newNodeId);
-          // .attr("x", row)
-          // .attr("y", col);
+        $cell.attr("id", newNodeId);
 
         if (row === 1 && col === 1) {
           newNodeClass = "start";
           $cell.addClass("start");
           this.start = new _node__WEBPACK_IMPORTED_MODULE_0__["default"](newNodeId, newNodeClass);
-          // $cell.addClass("fas fa-dog");
-        } else if (row === 8 && col === 8) {
+        } else if (row === height - 2 && col === 24) {
           newNodeClass = "goal";
           $cell.addClass("goal");
           this.goal = new _node__WEBPACK_IMPORTED_MODULE_0__["default"](newNodeId, newNodeClass);
-          // $cell.addClass("fas fa-user");
         } else {
           $cell.addClass("walkable");
           newNodeClass = "walkable";
         }
 
         newNode = new _node__WEBPACK_IMPORTED_MODULE_0__["default"](newNodeId, newNodeClass);
-        // currentNodeRow.push(newNode);
         $rowHTML.append($cell);
         currentGridRow.push($cell);
         this.nodeObject[`${newNodeId}`] = newNode;
       }
 
       this.grid.push(currentGridRow);
-      // this.nodes.push(currentNodeRow);
       $graph.append($rowHTML);
     }
   }
@@ -421,7 +381,8 @@ class Grid {
   clearGridBtn() {
     document.getElementById("CGrid").onclick = () => {
       this.clearWalls();
-      // console.log("text");
+      this.clearVisited();
+      this.clearPath();
     };
   }
 
@@ -429,7 +390,29 @@ class Grid {
     Object.keys(this.nodeObject).forEach(node => {
       let nodeHTML = document.getElementById(node);
       let currentNode = this.nodeObject[node];
-      if (currentNode.status === "block") {
+      if (nodeHTML.className === "block") {
+        currentNode.status = "walkable";
+        nodeHTML.className = "walkable";
+      }
+    });
+  }
+
+  clearVisited() {
+    Object.keys(this.nodeObject).forEach(node => {
+      let nodeHTML = document.getElementById(node);
+      let currentNode = this.nodeObject[node];
+      if (nodeHTML.className === "visited") {
+        currentNode.status = "walkable";
+        nodeHTML.className = "walkable";
+      }
+    });
+  }
+
+  clearPath() {
+    Object.keys(this.nodeObject).forEach(node => {
+      let nodeHTML = document.getElementById(node);
+      let currentNode = this.nodeObject[node];
+      if (nodeHTML.className === "path") {
         currentNode.status = "walkable";
         nodeHTML.className = "walkable";
       }
@@ -441,9 +424,13 @@ class Grid {
       if (document.getElementById("gridg_1").checked) {
         console.log(this.grid);
         this.clearWalls();
+        this.clearVisited();
+        this.clearPath();
         this.randomGridGen();
       } else {
         this.clearWalls();
+        this.clearVisited();
+        this.clearPath();
         this.mazeGridGen();
       }
     };
@@ -462,11 +449,9 @@ class Grid {
   }
 
   mazeGridGen() {
-    // let outline = false;
-    // if (!outline) {
-      Object.keys(this.nodeObject).forEach(node => {
-        let nodesToSkip = ["start", "goal"];
-        let nodeHTML = document.getElementById(node);
+    Object.keys(this.nodeObject).forEach(node => {
+      let nodesToSkip = ["start", "goal"];
+      let nodeHTML = document.getElementById(node);
       if (!nodesToSkip.includes(nodeHTML.className)) {
         let row = parseInt(node.split("-")[0]);
         let col = parseInt(node.split("-")[1]);
@@ -478,51 +463,75 @@ class Grid {
           col === this.width - 1
         ) {
           nodeHTML.className = "block";
-          // console.log(nodeHTML);
           this.nodeObject[node].status = "block";
         }
-        // outline = true;
       }
     });
-    // }
   }
 
   checkAlgo() {
-    // document.getElementById("StartButton").onclick = () => {
-      if (document.getElementById("BFS").checked) {
-        return _BFS__WEBPACK_IMPORTED_MODULE_1__["default"];
-      } else if (document.getElementById("DFS").checked) {
-        return _BFS__WEBPACK_IMPORTED_MODULE_1__["default"];
-      }
-    // };
+    if (document.getElementById("BFS").checked) {
+      return _BFS__WEBPACK_IMPORTED_MODULE_1__["default"];
+    } else if (document.getElementById("DFS").checked) {
+      return _BFS__WEBPACK_IMPORTED_MODULE_1__["default"];
+    }
   }
 
   startAlgo() {
     document.getElementById("StartButton").onclick = () => {
-      // console.log("startAlgobutton");
-      // this.$start = this.$cells.filter(".start");
+      this.clearVisited();
+      this.clearPath();
       this.algo = this.checkAlgo();
-      let algoObj = new this.algo(this.nodeObject, this.start, this.goal, this.grid);
-      let {path, visitedNodes} = algoObj.search();
+      let algoObj = new this.algo(
+        this.nodeObject,
+        this.start,
+        this.goal,
+        this.grid
+      );
+      let { path, visitedNodes } = algoObj.search();
       this.path = path;
       this.highlightVisited(visitedNodes, 0);
+      // console.log(path);
+      // console.log(this.grid);
+      // console.log(visitedNodes);
+      // console.log(this.nodeObject);
+      // console.log(this.grid);
     };
   }
 
   highlightVisited(visitedNodes, i) {
-    // console.log(visitedNodes[i].id);
-    setInterval(() => {
-      let j = i;
-      while (j < visitedNodes.length - 1) {
-        let nodeHTML = document.getElementById(visitedNodes[j].id);
-        nodeHTML.className = "visited";
-      j++;
-      // if (i < visitedNodes.length - 1) {
-        // this.highlightVisited(visitedNodes, i+1);
-      }
-      }, 1000);
+      let nodeHTML = document.getElementById(visitedNodes[i]);
+      nodeHTML.className = "visited";
+            setTimeout(() => {
+      if (i < visitedNodes.length - 1) {
+      this.highlightVisited(visitedNodes, i+1);
+      } else {
+        this.highlightPath(this.path, 0);
+      } 
+    }, 1);
   }
 
+  highlightPath(path, i) {
+    let nodeHTML = document.getElementById(path[i]);
+    nodeHTML.className = "path";
+    setTimeout(() => {
+      if (i < path.length - 2) {
+      this.highlightPath(path, i+1);
+    }
+    }, 10);
+  }
+
+  // addEventListener("mousedown", function(e){
+  //   mouseDownFunction(e); 
+
+  //   document.onmousemove = function(e) {
+  //       mouseMoveFunction(e);
+  //    }
+  // });
+
+  // document.addEventListener("mouseup", function(e){
+  //     myObject.onmousemove = null;
+  // });
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Grid);
@@ -546,14 +555,11 @@ __webpack_require__.r(__webpack_exports__);
 
 $(document).ready(() => {
   new _grid__WEBPACK_IMPORTED_MODULE_0__["default"]($("#grid"));
-  // console.log(Grid);
   const $newGridBtn = document.getElementById("GGrid");
   $newGridBtn.addEventListener("click", () => new _grid__WEBPACK_IMPORTED_MODULE_0__["default"]($("#grid")));
 
 });
 
-
-// console.log("Webpack is working!");
 
 /***/ }),
 
@@ -570,20 +576,10 @@ class Node {
   constructor(id, status) {
       this.id = id;
       this.status = status;
-      // this.previousNode = null;
-      this.weight = 0;
-      // this.path = null;
-      // this.x = x;
-      // this.y = y;
-    // this.pos = { x: this.x, y: this.y };
-    // this.weight = weight;
+      // this.weight = 0;
 
-    // this.f = 0;
-    // this.g = 0;
-    // this.h = 0;
 
     this.visited = false;
-    // this.closed = false;
     this.parent = null;
   }
 }

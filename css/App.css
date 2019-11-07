@@ -162,5 +162,9 @@ table {
 .visited {
     background-color: aqua;
     border: 1px solid rgb(175, 216, 248);
+}
 
+.path {
+    background-color: red;
+    border: 1px solid red;
 }

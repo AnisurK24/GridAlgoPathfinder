@@ -2,20 +2,15 @@ class BFS {
   constructor(nodes, start, goal, grid) {
     this.nodes = nodes;
     this.grid = grid;
-    // this.height = height;
-    // this.width = width;
     this.start = start;
     this.goal = goal;
-    // console.log(this.grid);
-    // for (let row = 0; row < this.height; row++) {
-    //   for (let col = 0; col < this.width; col++) {
-    //     if (this.grid[row][col].class === start) {
-    //       this.start = this.grid[row][col];
-    //     } else if (this.grid[row][col].class === goal) {
-    //       this.goal = this.grid[row][col];
-    //     }
-    //   }
-    // }
+    console.log(grid);
+    console.log(nodes);
+    Object.keys(this.nodes).forEach(node => {
+      let currentNode = this.nodes[node];
+      currentNode.visited = false;
+      currentNode.parent = null;
+    });
   }
 
   search() {
@@ -28,6 +23,7 @@ class BFS {
 
     let queue = [start];
     start.visited = true;
+
     while (queue.length > 0) {
         let node = queue.shift();
 
@@ -37,15 +33,14 @@ class BFS {
 
         
         while (currentNode.parent) {
-          path.push(currentNode);
+          path.push(currentNode.id);
           currentNode = currentNode.parent;
         }
         
-        // console.log(grid);
+        // console.log(path);
         return { path: path.reverse(), visitedNodes: closedSet };
       }
-      // console.log(goal.id);
-      // console.log(node.id);
+      
 
       const coordinates = node.id.split("-");
       const row = parseInt(coordinates[0]);
@@ -55,8 +50,8 @@ class BFS {
       // console.log(nodeHTML);
       if (node.id !== start.id) {
         // nodeHTML.className = "visited";
-        node.visited = true;
-        closedSet.push(node);
+        // node.visited = true;
+        closedSet.push(node.id);
       }
 
       // let neighborNodes = [];
@@ -66,6 +61,7 @@ class BFS {
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
                 nodes[neighborNode].parent = node;
+                nodes[neighborNode].visited = true;
           }
       }
       if (grid[col + 1] && grid[row][col + 1]) {
@@ -73,6 +69,7 @@ class BFS {
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
                 nodes[neighborNode].parent = node;
+                nodes[neighborNode].visited = true;
           }
       }
       if (grid[row + 1] && grid[row + 1][col]) {
@@ -80,6 +77,7 @@ class BFS {
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
                 nodes[neighborNode].parent = node;
+                nodes[neighborNode].visited = true;
           }
       }
       if (grid[col - 1] && grid[row][col - 1]) {
@@ -87,21 +85,9 @@ class BFS {
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
                 nodes[neighborNode].parent = node;
+                nodes[neighborNode].visited = true;
           }
       }
-
-
-      // for (let i = 0; i < neighborNodes.length; i++) {
-        // let neighbor = neighborNodes[i];
-
-        // if (n.closed || n.weight === 0) continue;
-
-        // if (!neighbor.visited) {
-          // n.visited = true;
-          // neighbor.parent = currNode;
-          // queue.push(neighbor);
-        // }
-      // }
     }
   }
 }
