@@ -3,6 +3,7 @@ class Node {
       this.id = id;
       this.status = status;
       // this.weight = 0;
+      
 
 
     this.visited = false;

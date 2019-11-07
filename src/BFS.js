@@ -64,7 +64,7 @@ class BFS {
                 nodes[neighborNode].visited = true;
           }
       }
-      if (grid[col + 1] && grid[row][col + 1]) {
+      if (grid[0][col + 1] && grid[row][col + 1]) {
         neighborNode = `${row.toString()}-${(col + 1).toString()}`;
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);
@@ -80,7 +80,7 @@ class BFS {
                 nodes[neighborNode].visited = true;
           }
       }
-      if (grid[col - 1] && grid[row][col - 1]) {
+      if (grid[0][col - 1] && grid[row][col - 1]) {
         neighborNode = `${row.toString()}-${(col - 1).toString()}`;
           if (nodes[neighborNode].status !== "block" && !nodes[neighborNode].visited) {
                 queue.push(nodes[neighborNode]);

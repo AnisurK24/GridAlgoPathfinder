@@ -53,7 +53,7 @@ class Grid {
           newNodeClass = "start";
           $cell.addClass("start");
           this.start = new Node(newNodeId, newNodeClass);
-        } else if (row === height - 2 && col === 24) {
+        } else if (row === height - 2 && col === width - 2) {
           newNodeClass = "goal";
           $cell.addClass("goal");
           this.goal = new Node(newNodeId, newNodeClass);
@@ -198,7 +198,7 @@ class Grid {
     if (document.getElementById("BFS").checked) {
       return BFS;
     } else if (document.getElementById("DFS").checked) {
-      return BFS;
+      return DFS;
     }
   }
 
@@ -219,20 +219,20 @@ class Grid {
       // console.log(path);
       // console.log(this.grid);
       // console.log(visitedNodes);
-      // console.log(this.nodeObject);
-      // console.log(this.grid);
+      console.log(this.nodeObject);
+      console.log(this.grid);
     };
   }
 
   highlightVisited(visitedNodes, i) {
       let nodeHTML = document.getElementById(visitedNodes[i]);
       nodeHTML.className = "visited";
-            setTimeout(() => {
-      if (i < visitedNodes.length - 1) {
-      this.highlightVisited(visitedNodes, i+1);
-      } else {
-        this.highlightPath(this.path, 0);
-      } 
+      setTimeout(() => {
+        if (i < visitedNodes.length - 1) {
+        this.highlightVisited(visitedNodes, i+1);
+        } else {
+          this.highlightPath(this.path, 0);
+        } 
     }, 1);
   }
 

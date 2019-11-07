@@ -1,53 +1,102 @@
 class DFS {
-  constructor(graph, start, end) {
+  constructor(nodes, start, goal, grid) {
+    this.nodes = nodes;
+    this.grid = grid;
     this.start = start;
-    this.end = end;
-    this.graph = graph;
+    this.goal = goal;
+    console.log(grid);
+    console.log(nodes);
+    Object.keys(this.nodes).forEach(node => {
+      let currentNode = this.nodes[node];
+      currentNode.visited = false;
+      currentNode.parent = null;
+    });
   }
 
   search() {
-    const graph = this.graph;
-    const start = this.start;
-    const end = this.end;
-    const closedSet = [];
+    let nodes = this.nodes;
+    let start = this.start;
+    let goal = this.goal;
+    let grid = this.grid;
+    let closedSet = [];
 
-    let stack = [[start, []]];
+    let queue = [start];
+    start.visited = true;
 
-    while (stack.length > 0) {
-      let currState = stack.pop();
-      let currNode = currState[0];
-      let currPath = currState[1];
+    while (queue.length > 0) {
+      let node = queue.shift();
 
-      if (currNode.x === end.x && currNode.y === end.y) {
-        return { path: currPath, closedSet: closedSet };
-      }
+      if (node.id === goal.id) {
+        let path = [];
+        let currentNode = node;
 
-      if (currNode.closed) {
-        continue;
-      }
-
-      let neighbors = graph.neighbors(currNode);
-      for (let i = 0; i < neighbors.length; i++) {
-        let n = neighbors[i];
-
-        if (n.weight === 0) continue;
-
-        if (n.x === end.x && n.y === end.y) {
-          return {
-            path: currPath.concat([n]),
-            closedSet: closedSet.concat([currNode])
-          };
+        while (currentNode.parent) {
+          path.push(currentNode.id);
+          currentNode = currentNode.parent;
         }
 
-        if (!n.visited) {
-          n.visited = true;
-          n.parent = currNode;
-          stack.push([n, currPath.concat([n])]);
-        }
+        // console.log(path);
+        return { path: path.reverse(), visitedNodes: closedSet };
       }
 
-      currNode.closed = true;
-      closedSet.push(currNode);
+      const coordinates = node.id.split("-");
+      const row = parseInt(coordinates[0]);
+      const col = parseInt(coordinates[1]);
+
+      // let nodeHTML = document.getElementById(node.id);
+      // console.log(nodeHTML);
+      if (node.id !== start.id) {
+        // nodeHTML.className = "visited";
+        // node.visited = true;
+        closedSet.push(node.id);
+      }
+
+      // let neighborNodes = [];
+      let neighborNode;
+      if (grid[row - 1] && grid[row - 1][col]) {
+        neighborNode = `${(row - 1).toString()}-${col.toString()}`;
+        if (
+          nodes[neighborNode].status !== "block" &&
+          !nodes[neighborNode].visited
+        ) {
+          queue.push(nodes[neighborNode]);
+          nodes[neighborNode].parent = node;
+          nodes[neighborNode].visited = true;
+        }
+      }
+      if (grid[0][col + 1] && grid[row][col + 1]) {
+        neighborNode = `${row.toString()}-${(col + 1).toString()}`;
+        if (
+          nodes[neighborNode].status !== "block" &&
+          !nodes[neighborNode].visited
+        ) {
+          queue.push(nodes[neighborNode]);
+          nodes[neighborNode].parent = node;
+          nodes[neighborNode].visited = true;
+        }
+      }
+      if (grid[row + 1] && grid[row + 1][col]) {
+        neighborNode = `${(row + 1).toString()}-${col.toString()}`;
+        if (
+          nodes[neighborNode].status !== "block" &&
+          !nodes[neighborNode].visited
+        ) {
+          queue.push(nodes[neighborNode]);
+          nodes[neighborNode].parent = node;
+          nodes[neighborNode].visited = true;
+        }
+      }
+      if (grid[0][col - 1] && grid[row][col - 1]) {
+        neighborNode = `${row.toString()}-${(col - 1).toString()}`;
+        if (
+          nodes[neighborNode].status !== "block" &&
+          !nodes[neighborNode].visited
+        ) {
+          queue.push(nodes[neighborNode]);
+          nodes[neighborNode].parent = node;
+          nodes[neighborNode].visited = true;
+        }
+      }
     }
   }
 }
