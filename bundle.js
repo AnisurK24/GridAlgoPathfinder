@@ -454,18 +454,18 @@ class Grid {
 
   checkGridGen() {
     document.getElementById("PGrid").onclick = () => {
-      if (document.getElementById("gridg_1").checked) {
+      // if (document.getElementById("gridg_1").checked) {
         console.log(this.grid);
         this.clearWalls();
         this.clearVisited();
         this.clearPath();
         this.randomGridGen();
-      } else {
-        this.clearWalls();
-        this.clearVisited();
-        this.clearPath();
-        this.mazeGridGen();
-      }
+    //   } else {
+    //     this.clearWalls();
+    //     this.clearVisited();
+    //     this.clearPath();
+    //     this.mazeGridGen();
+    //   }
     };
   }
 

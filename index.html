@@ -9,12 +9,24 @@
     <link rel="stylesheet" type="text/css" href="css/index.css" />
     <link rel="stylesheet" type="text/css" href="css/App.css" />
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+    <script type="text/javascript">
+        function display_alert() {
+            alert("1. Select grid size & hit \"Generate Grid\"\n2. Hit \"Populate Grid\" to add random blocks\n3. Choose an algorithm, hit \"Start\", and enjoy!")
+        }
+    </script>
     <title>Pathfinder visualizer</title>
 </head>
 <body>
     <div class="title-container">
+        <div class="help">
+            <input class="helpbtn" type="button" onclick="display_alert()" value="Need Help?" />
+        </div>
+
         <h1 class="title">GridAlgoPathfinder</h1>
         <!-- <i class="fas fa-running"></i> -->
+        <div class="key">
+            <p>Start:</p><img class="kstart" src="./css/running-man.svg" alt=""><p>Goal:</p><img class="kgoal" src="./css/flag.svg" alt=""><p>Block:</p><div class="kblock"></div><p>Visited:</p><div class="kvisited"></div><p>Path:</p><div class="kpath"></div>
+        </div>
     </div>
     <div id="main">
         <table id="grid"></table>
@@ -31,13 +43,13 @@
             </div>
                 <button class="start-btn" id="GGrid">Generate Grid</button>
             <div class="spacer"></div>
-            <div class="menu-radio">
-                <p class="text-t">Select Grid Style:</p>
-                <div class="radio text">
-                    <input type="radio" id="gridg_1" name="grid" value="grid" checked>Random
-                    <input type="radio" id="gridg_2" name="grid" value="maze">Maze
-                </div>
-            </div>
+            <!-- <div class="menu-radio"> -->
+                <!-- <p class="text-t">Select Grid Style:</p> -->
+                <!-- <div class="radio text"> -->
+                    <!-- <input type="radio" id="gridg_1" name="grid" value="grid" checked>Random -->
+                    <!-- <input type="radio" id="gridg_2" name="grid" value="maze">Maze -->
+                <!-- </div> -->
+            <!-- </div> -->
                 <button class="start-btn" id="PGrid">Populate Grid</button>
             <div class="spacer"></div>
             <div class="menu-radio">

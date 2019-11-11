@@ -6,10 +6,43 @@
     text-align: start;
     padding: 3px 5px;
     font-family: "Lato", Helvetica, Arial, sans-serif;
+    width: 30%;
 }
 
 .title-container {
     background-color: #34495e;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    /* margin-right: 10%; */
+    align-items: center;
+}
+
+.key {
+    margin-right: 2%;
+    align-self: center;
+    flex-direction: row;
+    display: flex;
+    width: 30%;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.key p {
+    color: white;
+    margin: 2%;
+}
+
+.key img {
+    width: 25px;
+}
+
+.kstart {
+    width: 25px;
+}
+
+.kgoal {
+    width: 25px;
 }
 
 .walkable {
@@ -22,6 +55,46 @@
     justify-content: center;
 }
 
+.kstart {
+    background: white;
+    width: 25px;
+    height: 25px;
+    background-color: greenyellow;
+    border: 1px solid violet;
+}
+
+.kgoal {
+    background: white;
+    width: 25px;
+    height: 25px;
+    background-color: yellow;
+    border: 1px solid red;
+}
+
+.kblock {
+    background: white;
+    width: 25px;
+    height: 25px;
+    background-color: rgb(12, 53, 71);
+    border: 1px solid white;
+}
+
+.kvisited {
+    background: white;
+    width: 25px;
+    height: 25px;
+    background-color: aqua;
+    border: 1px solid rgb(175, 216, 248);
+}
+
+.kpath {
+    background: white;
+    width: 25px;
+    height: 25px;
+    background-color: red;
+    border: 1px solid red;
+}
+
 #main {
     /* width: 700px; */
     /* border-radius: 10px; */
@@ -29,7 +102,7 @@
     background-color: #FFFFFF;
     /* box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
     /* height: 100%; */
-    height: 88%;
+    height: 90%;
     /* position: absolute; */
     width: 100vw;
 }
@@ -82,6 +155,7 @@ table {
     background-color: #34495e;
     width: 100%;
     align-items: center;
+    height: 10%;
 }
 
 .text {
@@ -103,7 +177,7 @@ table {
     /* height: auto; */
     background-color: #9A9698; 
     height: 50px;
-    margin: 0 5px;
+    margin: 0 20px;
     opacity: 0.5;
 }
 
@@ -145,7 +219,7 @@ table {
 }
 
 .start-btn:hover {
-    background-color: #48c9b0;
+    background-color: #369682;
     cursor: pointer;
 }
 
@@ -167,4 +241,23 @@ table {
 .path {
     background-color: red;
     border: 1px solid red;
+}
+
+.help {
+    width: 37%;
+}
+
+.helpbtn {
+    color: #ffffff;
+    background-color: #FF9000;
+    border: none;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 1.4;
+    border-radius: 4px;
+    padding: 10px 15px;
+    transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
+    white-space: nowrap;
+    cursor: pointer;
+    margin-left: 5px;
 }
