@@ -16,6 +16,7 @@
     justify-content: space-between;
     /* margin-right: 10%; */
     align-items: center;
+    height: 10%;
 }
 
 .key {
@@ -102,7 +103,7 @@
     background-color: #FFFFFF;
     /* box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
     /* height: 100%; */
-    height: 90%;
+    height: 89%;
     /* position: absolute; */
     width: 100vw;
 }
@@ -259,5 +260,9 @@ table {
     transition: border 0.25s linear, color 0.25s linear, background-color 0.25s linear;
     white-space: nowrap;
     cursor: pointer;
-    margin-left: 5px;
+    margin-left: 25px;
+}
+
+.helpbtn:hover {
+    background-color: #cc7400;
 }
