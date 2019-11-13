@@ -159,6 +159,12 @@ table {
     height: 10%;
 }
 
+/* .menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+} */
+
 .text {
     color: white;
     font-size: 14px;
@@ -245,7 +251,7 @@ table {
 }
 
 .help {
-    width: 37%;
+    width: 20%;
 }
 
 .helpbtn {
@@ -265,4 +271,29 @@ table {
 
 .helpbtn:hover {
     background-color: #cc7400;
+}
+
+ul.icons {
+        cursor: default;
+        display: flex;
+        /* justify-content: flex-end; */
+        width: 20%;
+}
+
+ul.icons li {
+    display: inline-block;
+}
+
+ul.icons a {
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    border: 0;
+    color: #fafafa78;
+}
+
+ul.icons a:hover {
+    color: white;
 }
